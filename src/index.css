@@ -1,0 +1,27 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Barlow Condensed", "Arial Narrow", system-ui, sans-serif;
+  --font-body: "Barlow", system-ui, sans-serif;
+  --color-hz-pink: #ff2e88;
+  --color-hz-cyan: #2de2ff;
+  --color-hz-ink: #0b0d12;
+  --color-m-blue: #0066b1;
+  --color-m-navy: #1c2a5b;
+  --color-m-red: #e4002b;
+}
+
+html, body, #root { height: 100%; margin: 0; overflow: hidden; background: #07080b; }
+body { font-family: var(--font-body); color: #fff; user-select: none; -webkit-user-select: none; -webkit-font-smoothing: antialiased;
+  touch-action: none; overscroll-behavior: none; -webkit-touch-callout: none; -webkit-tap-highlight-color: transparent; position: fixed; inset: 0; }
+/* menus/panels can still scroll on small screens */
+.scroll-y { overflow-y: auto; touch-action: pan-y; -webkit-overflow-scrolling: touch; }
+
+.m-stripe { background: linear-gradient(90deg, #4fb4e8 0 33.3%, #1c2a5b 33.3% 66.6%, #e4002b 66.6% 100%); }
+.skew-panel { transform: skewX(-12deg); }
+.skew-panel > * { transform: skewX(12deg); }
+
+@keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+.rise { animation: rise .6s cubic-bezier(.2,.8,.2,1) both; }
+@keyframes toastIn { from { opacity: 0; transform: translate(-50%, -8px); } to { opacity: 1; transform: translate(-50%, 0); } }
+.toast-in { animation: toastIn .25s ease-out both; }
