@@ -316,9 +316,9 @@ class Music {
     this.verb = a.ctx.createGain(); this.verb.gain.value = 0.5
     this.verb.connect(a.reverb)
     // user-supplied track overrides the generator (Vite serves index.html for missing files → check type)
-    fetch('/audio/bgm.mp3', { method: 'HEAD' }).then((r) => {
+    fetch(import.meta.env.BASE_URL + 'audio/bgm.mp3', { method: 'HEAD' }).then((r) => {
       if (r.ok && (r.headers.get('content-type') || '').startsWith('audio')) {
-        const el = new window.Audio('/audio/bgm.mp3'); el.loop = true; el.crossOrigin = 'anonymous'
+        const el = new window.Audio(import.meta.env.BASE_URL + 'audio/bgm.mp3'); el.loop = true; el.crossOrigin = 'anonymous'
         this.a.ctx.createMediaElementSource(el).connect(this.out)
         this.file = el
         if (this.timer) { this.stop(); this.start() }

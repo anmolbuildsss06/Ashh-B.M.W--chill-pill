@@ -3,6 +3,8 @@ import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
+  // relative paths so the build runs from any folder or host (e.g. a shared link)
+  base: './',
   plugins: [react(), tailwindcss()],
   server: { host: true, port: 5173 },
   build: {

@@ -2,7 +2,7 @@
 // The .blend's Cycles materials don't survive export, so each named material is mapped to a
 // physically based material here (paint follows the Garage colour).
 import { useEffect, useMemo } from 'react'
-import { useGLTF } from '@react-three/drei'
+import { useModel } from '../lib/models.js'
 import * as THREE from 'three'
 
 function materialFor(name, m) {
@@ -74,7 +74,7 @@ function surfaceFrame(root, meshes, carCentre) {
 }
 
 export function M4BodyGLB({ url, scale, mats }) {
-  const { scene } = useGLTF(url)
+  const { scene } = useModel(url)
   const m = useModelMaterials(mats)
   const body = useMemo(() => {
     const root = scene.clone(true)
@@ -168,7 +168,7 @@ export function M4BodyGLB({ url, scale, mats }) {
 
 /** One road wheel from the model, centred on its hub, outer face toward +X. */
 export function useWheelModel(url) {
-  const { scene } = useGLTF(url)
+  const { scene } = useModel(url)
   return useMemo(() => {
     const tyre = new THREE.MeshStandardMaterial({ color: '#1a1a1a', roughness: 0.82 })
     const rim = new THREE.MeshStandardMaterial({ color: '#80868e', metalness: 0.92, roughness: 0.2, envMapIntensity: 1.4 })
@@ -192,5 +192,5 @@ export function GLBWheelVisual({ wheelScene, side, scale }) {
 }
 
 export const preloadModel = (spec) => {
-  if (spec.model) { useGLTF.preload(spec.model.body); useGLTF.preload(spec.model.wheel) }
+  if (spec.model) { useModel.preload(spec.model.body); useModel.preload(spec.model.wheel) }
 }

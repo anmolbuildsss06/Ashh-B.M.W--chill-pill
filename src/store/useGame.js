@@ -21,13 +21,20 @@ export const IS_TOUCH = typeof window !== 'undefined' &&
   (window.matchMedia?.('(pointer: coarse)').matches || navigator.maxTouchPoints > 0) &&
   !window.matchMedia?.('(pointer: fine)').matches
 
+// v2: every device starts on High at 100% resolution. Older saved quality/resolution choices are reset once.
+const SETTINGS_VERSION = 2
 const saved = (() => {
-  try { return JSON.parse(localStorage.getItem('m4h-settings') || '{}') } catch { return {} }
+  try {
+    const s = JSON.parse(localStorage.getItem('m4h-settings') || '{}')
+    if ((s.v ?? 1) < SETTINGS_VERSION) { delete s.quality; delete s.renderScale }
+    return s
+  } catch { return {} }
 })()
 
 const persist = (s) => {
   try {
     localStorage.setItem('m4h-settings', JSON.stringify({
+      v: SETTINGS_VERSION,
       quality: s.quality, renderScale: s.renderScale, touchSteer: s.touchSteer, touchControls: s.touchControls, audio: s.audio, assists: s.assists, paintId: s.paintId, cameraMode: s.cameraMode, showFps: s.showFps,
     }))
   } catch { /* storage unavailable */ }
@@ -38,12 +45,12 @@ export const useGame = create((set, get) => ({
   phase: 'intro',
   carId: DEFAULT_CAR_ID,
   paintId: saved.paintId ?? CARS[DEFAULT_CAR_ID].paints[0].id,
-  quality: saved.quality ?? (IS_TOUCH ? 'low' : 'medium'),
+  quality: saved.quality ?? 'high',
   isTouch: IS_TOUCH,
   // on-screen controls: shown by default on touch devices, can be forced on/off in settings
   touchControls: saved.touchControls ?? IS_TOUCH,
   touchSteer: saved.touchSteer ?? 'drag', // 'drag' | 'buttons' | 'tilt'
-  renderScale: saved.renderScale ?? (IS_TOUCH ? 0.8 : 1),
+  renderScale: saved.renderScale ?? 1,
   showFps: saved.showFps ?? false,
   audio: { master: 0.8, sfx: 0.85, music: 0.5, musicOn: true, ...(saved.audio || {}) },
   cameraMode: Math.min(saved.cameraMode ?? 0, CAMERA_MODES.length - 1),

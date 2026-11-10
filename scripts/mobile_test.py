@@ -58,7 +58,7 @@ with sync_playwright() as p:
     t = Touch(ctx.new_cdp_session(page))
 
     st = page.evaluate("() => { const s = window.__m4.store.getState(); return { isTouch: s.isTouch, touchControls: s.touchControls, quality: s.quality } }")
-    check('Phone detected → touch controls on, Low quality default', st['isTouch'] and st['touchControls'] and st['quality'] == 'low', json.dumps(st))
+    check('Phone detected → touch controls on, starts on High', st['isTouch'] and st['touchControls'] and st['quality'] == 'high', json.dumps(st))
 
     time.sleep(1.0)
     t.tap(420, 200)  # tap skips intro

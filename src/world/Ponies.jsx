@@ -5,14 +5,15 @@
 // everyone else wanders in their home area and scatters when the car comes close.
 import { useEffect, useMemo, useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
-import { useGLTF } from '@react-three/drei'
+import { useModel } from '../lib/models.js'
+import { modelUrl } from '../lib/modelUrl.js'
 import * as THREE from 'three'
 import { clone as cloneSkinned } from 'three/examples/jsm/utils/SkeletonUtils.js'
 import { useGame } from '../store/useGame.js'
 import { surfaceAt } from './surfaces.js'
 import { carState } from '../vehicle/carState.js'
 
-const url = (n) => `/models/ponies/pony-${n}.glb`
+const url = (n) => modelUrl(`models/ponies/pony-${n}.glb`)
 const SCALE = 0.55 // model is ~2.2 units tall → ~1.2 m
 
 // name, can fly, home (centre x, z, radius), walk speed
@@ -113,7 +114,7 @@ function pose(j, angle) {
 }
 
 function Pony({ cast }) {
-  const { scene } = useGLTF(url(cast.name))
+  const { scene } = useModel(url(cast.name))
   const rig = useMemo(() => buildRig(scene), [scene])
   const group = useRef()
   const s = useMemo(() => {
@@ -304,5 +305,5 @@ export default function Ponies() {
   return cast.map((c) => <Pony key={c.name} cast={c} />)
 }
 
-CAST.forEach((c) => useGLTF.preload(url(c.name)))
+CAST.forEach((c) => useModel.preload(url(c.name)))
 if (typeof window !== 'undefined') window.__m4 = Object.assign(window.__m4 || {}, { ponyCast: CAST })

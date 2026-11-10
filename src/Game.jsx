@@ -1,7 +1,7 @@
 import { Suspense, useState } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { Physics } from '@react-three/rapier'
-import { PerformanceMonitor, Stats } from '@react-three/drei'
+import { Stats } from '@react-three/drei'
 import * as THREE from 'three'
 import Car from './vehicle/Car.jsx'
 import CameraRig from './camera/CameraRig.jsx'
@@ -41,9 +41,8 @@ export default function Game() {
   const phase = useGame((s) => s.phase)
   const showFps = useGame((s) => s.showFps)
   const q = QUALITY[quality]
-  const [perfFactor, setPerfFactor] = useState(1)
   const maxDpr = typeof window !== 'undefined' ? window.devicePixelRatio : 1
-  const dpr = Math.max(0.5, Math.min(q.dpr, maxDpr) * renderScale * perfFactor)
+  const dpr = Math.max(0.5, Math.min(q.dpr, maxDpr) * renderScale) // fixed: no automatic downscaling
   const showcase = phase === 'intro' || phase === 'menu'
 
   return (
@@ -58,13 +57,6 @@ export default function Game() {
         window.__m4 = Object.assign(window.__m4 || {}, { scene, camera, gl })
       }}
     >
-      {/* Only ever step resolution *down*, a little, when the frame rate really drops.
-          Bouncing it up and down resizes the canvas each time, which shows as a visible flash. */}
-      <PerformanceMonitor
-        bounds={(refresh) => [Math.min(40, refresh * 0.6), refresh]}
-        onDecline={() => setPerfFactor((f) => Math.max(0.7, +(f - 0.1).toFixed(2)))}
-        flipflops={2}
-      />
       <Suspense fallback={null}>
         <Atmosphere />
         <Physics gravity={[0, -9.81, 0]} timeStep={1 / 60} paused={phase === 'paused'} interpolate>

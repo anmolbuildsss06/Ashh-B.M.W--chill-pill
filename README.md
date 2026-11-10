@@ -14,6 +14,10 @@ npm run test:physics # headless driving tests (Node + Rapier)
 
 The browser end-to-end test needs Python Playwright and a running dev server: `python3 scripts/browser_test.py`.
 
+## Share it
+
+`npm run build:share` makes a self-contained copy in `dist-share/` that runs from any static web host, such as Netlify Drop, GitHub Pages or itch.io (as an HTML5 game). Upload the folder's contents and send the link.
+
 ## Play on your phone
 
 Run `npm run dev` on your computer. Then, on your phone (on the same Wi-Fi), open the **Network** address Vite prints, e.g. `http://192.168.1.20:5173`.
@@ -115,5 +119,3 @@ The car and pony `.blend` files were converted with the scripts in `scripts/asse
 ## Next: Stage 2
 
 Replace the proving ground with streamed open-world terrain (heightfield chunks) and a connected spline road network, keeping `surfaceAt()` as the single source of truth for grip.
-#   A s h h B m w M 4  
- 

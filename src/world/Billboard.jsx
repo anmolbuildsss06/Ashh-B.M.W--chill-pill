@@ -1,4 +1,4 @@
-// Big roadside banner: "Ashh loves / B Means B.M.W!" with an original racing-heart emblem.
+r// Big roadside banner: "Ashh loves / B Means B.M.W!" with an original racing-heart emblem.
 import { useEffect, useMemo } from 'react'
 import * as THREE from 'three'
 import { RigidBody, CylinderCollider, CuboidCollider } from '@react-three/rapier'

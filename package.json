@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "test:physics": "node scripts/physics-test.mjs"
+    "test:physics": "node scripts/physics-test.mjs",
+    "build:share": "bash scripts/build-share.sh"
   },
   "keywords": [],
   "author": "",

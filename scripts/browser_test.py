@@ -45,7 +45,7 @@ with sync_playwright() as p:
     errors = []
     page.on('pageerror', lambda e: errors.append(f'pageerror: {e}'))
     page.on('console', lambda m: errors.append(f'console.{m.type}: {m.text}') if m.type == 'error' else None)
-    page.add_init_script("localStorage.setItem('m4h-settings', JSON.stringify({quality: 'low', renderScale: 0.6}))")
+    page.add_init_script("localStorage.setItem('m4h-settings', JSON.stringify({v: 2, quality: 'low', renderScale: 0.6}))")
     page.goto(URL)
     page.wait_for_function("() => window.__m4?.car?.sim", timeout=60000)
     time.sleep(2.5)

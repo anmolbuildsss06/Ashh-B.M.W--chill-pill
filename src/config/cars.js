@@ -1,3 +1,4 @@
+import { modelUrl } from '../lib/modelUrl.js'
 // Car catalogue. Every car is pure data so new cars can be added without touching the sim.
 // Units: SI (kg, m, N·m, s). Local frame: forward = -Z, up = +Y, right = +X.
 
@@ -8,8 +9,8 @@ export const BMW_M4_COMPETITION = {
   // 3D model: "BMW M4" (F82) from Blend Swap #81957, CC-BY 3.0, fan art / non-commercial.
   // Converted from .blend → glTF (see scripts/README-model.md). Scaled 1.05× to the real F82 footprint.
   model: {
-    body: '/models/m4-f82-body.glb',
-    wheel: '/models/m4-f82-wheel.glb',
+    body: modelUrl('models/m4-f82-body.glb'),
+    wheel: modelUrl('models/m4-f82-wheel.glb'),
     scale: 1.05,
     credit: 'BMW M4 3D model — Blend Swap #81957 (CC-BY 3.0, fan art, non-commercial)',
   },
